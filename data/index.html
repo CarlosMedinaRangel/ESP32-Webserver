@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNET Market</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="color: white">UNETMarket</h1>
+    <nav>
+      <a href="#index" style ="text-align: left;">inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#sobre-nosotros">Sobre Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a href="/tutorias.html" style ="text-align: right;">Tutorias</a>
+    </nav>
+  </header>
+
+  <div id="cart">🛒 Carrito: <span id="count">0</span></div>
+
+  <div class="container" id="productos">
+    <h2 >Productos Disponibles</h2>
+    <div class="grid">
+  <div class="card">
+    <img class="dynamic-img" data-keyword="Python Book cover" src="" alt="book">
+    <h3>Libro de Programación</h3>
+    <p class="price">40 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="coffee" src="" alt="coffee">
+    <h3>Café Artesanal</h3>
+    <p class="price">5 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="flash drive" src="" alt="flash drive">
+    <h3>Memoria USB 32GB</h3>
+    <p class="price">12 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="laptops" src="" alt="Laptop">
+    <h3>Laptop Usada HP</h3>
+    <p class="price">250 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="headphones firts plane" src="" alt="Headphones">
+    <h3>Audífonos Bluetooth</h3>
+    <p class="price">30 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="notebook" src="" alt="Notebook">
+    <h3>Cuadernos Universitarios</h3>
+    <p class="price">3 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="Scientific Calculator on Wooden Surface " src="" alt="Calculator">
+    <h3>Calculadora Científica</h3>
+    <p class="price">15 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="tshirt" src="" alt="T-shirt">
+    <h3>Camisa UNET</h3>
+    <p class="price">10 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+  <div class="card">
+    <img class="dynamic-img" data-keyword="backpack" src="" alt="Backpack">
+    <h3>Morral Universitario</h3>
+    <p class="price">22 USD</p>
+    <button onclick="addToCart()">Agregar al carrito</button>
+  </div>
+</div>
+
+
+  </div>
+
+  <div class="container" id="sobre-nosotros">
+    <h2>Sobre Nosotros</h2>
+    <p>UNET Market es una plataforma de venta interna creada por y para estudiantes de la UNET. Aquí puedes publicar objetos usados, libros, tecnología o cualquier producto que quieras ofrecer a la comunidad universitaria.</p>
+  </div>
+
+  <div class="container" id="contacto">
+    <h2>Contacto</h2>
+    <p>¿Tienes dudas o quieres cotizar algo?, contáctanos en <a href="e-mail:unetmarket@unet.edu.ve">unetmarket@unet.edu.ve</a> o búscanos en redes sociales.</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 UNET Market — Comunidad Estudiantil UNET</p>
+  </footer>
+
+  <script>
+  const API_KEY = "aXMuM42UdUSniXb31F3uwUx9j0Bo3CF2MyDufN9EVOpqr9RIJvGq6PI2";
+
+  let count = 0;
+
+  function addToCart() {
+    count++;
+    document.getElementById('count').textContent = count;
+  }
+
+  async function loadPexelsImages() {
+    const imageElements = document.querySelectorAll('.dynamic-img');
+
+    for (const img of imageElements) {
+      const keyword = img.getAttribute('data-keyword');
+      try {
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(keyword)}&per_page=1`, {
+          headers: {
+            Authorization: API_KEY
+          }
+        });
+
+        const data = await response.json();
+
+        if (data.photos.length > 0) {
+          img.src = data.photos[0].src.medium;
+        } else {
+          img.src = 'https://via.placeholder.com/400x200?text=No+Image';
+        }
+      } catch (error) {
+        console.error(`Error al cargar imagen de Pexels para "${keyword}":`, error);
+        img.src = 'https://via.placeholder.com/400x200?text=Error';
+      }
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', loadPexelsImages);
+</script>
+
+</body>
+</html>
